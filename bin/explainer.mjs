@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { findProject, projectPaths, ensureDir, KIT_VERSION } from "../src/paths.mjs";
 import { loadConfig } from "../src/config.mjs";
@@ -83,7 +84,7 @@ async function capture(config, project) {
       acceptDownloads: true,
     });
     if (fs.existsSync(project.capture)) {
-      const hook = await import(`${new URL(`file://${project.capture}`).href}?t=${Date.now()}`);
+      const hook = await import(`${pathToFileURL(project.capture).href}?t=${Date.now()}`);
       const files = await hook.default({ page, config, out, project });
       console.log(`captured ${files.join(", ")}`);
     } else {
