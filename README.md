@@ -124,6 +124,18 @@ examples/wave/           the fixture
 golden/                  the house voice reference
 ```
 
+## The skill
+
+`skill/SKILL.md` is the procedure an agent follows when asked for an explainer
+video. It is versioned with the kit. Install it once per machine:
+
+```bash
+ln -s ~/Work/jimmerioles/explainer-kit/skill ~/.agents/skills/explainer-video
+```
+
+When the kit moves, the symlink follows. When the workflow changes, the skill
+changes in the same commit as the commands.
+
 ## Requirements
 
 Node 22 or newer, FFmpeg with `loudnorm`, `ebur128`, `sidechaincompress`,
@@ -134,6 +146,6 @@ once.
 ## Versioning
 
 The kit is pinned per project: `config.json` records the version that produced
-the film, and the skill names a tag. When the house style changes, bump the kit
-and re-run the Wave fixture first. A project that pins an old version keeps
-building the film it shipped.
+the film, and the skill states the version it targets. When the house style
+changes, bump the kit and re-run the Wave fixture first. A project that pins an
+old version keeps building the film it shipped.
