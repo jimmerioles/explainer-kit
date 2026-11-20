@@ -1,0 +1,2 @@
+en-US-AvaNeural
+The orb on the stage is reading the actual audio signal, sixty times a second, and painting what it finds.

@@ -1,0 +1,30 @@
+{
+  "kit": "1.0.0",
+  "title": "Wave: the playable synth, explained",
+  "slug": "wave",
+  "targetSeconds": 195,
+  "theme": {
+    "chrome": {
+      "left": "WAVE",
+      "center": "A PLAYABLE SYNTHESIZER",
+      "right": "PROTOTYPE NO. 01"
+    }
+  },
+  "voice": {
+    "name": "en-US-AvaNeural",
+    "fallback": "en-US-EmmaNeural"
+  },
+  "mix": {
+    "bed": "music.m4a"
+  },
+  "capture": {
+    "url": "http://localhost:5199",
+    "selector": "#stage",
+    "viewport": { "width": 1440, "height": 900 }
+  },
+  "verify": {
+    "frameAt": 16,
+    "golden": "golden/frame.png",
+    "minSsim": 0.985
+  }
+}

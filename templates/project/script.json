@@ -1,0 +1,34 @@
+{
+  "title": "{{TITLE}}",
+  "segments": [
+    {
+      "id": "intro",
+      "title": "Cold open",
+      "sentences": [
+        "Start with the one idea this film has to land.",
+        "Then say what the thing is, in a single sentence.",
+        "And promise the viewer what they will understand by the end."
+      ],
+      "notes": "Wordmark, then the live product. One claim per beat."
+    },
+    {
+      "id": "thesis",
+      "title": "The idea",
+      "sentences": [
+        "This chapter carries one idea only.",
+        "Show the diagram building as the narration explains it.",
+        "Then restate the idea in plainer words."
+      ],
+      "notes": "The diagram is the argument. Do not decorate it."
+    },
+    {
+      "id": "close",
+      "title": "Close",
+      "sentences": [
+        "End on the smallest true sentence you have.",
+        "Leave the viewer with something they can do next."
+      ],
+      "notes": "Numbers, stack, end card. No call to action beyond one line."
+    }
+  ]
+}

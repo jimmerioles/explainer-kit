@@ -1,0 +1,2 @@
+en-US-AvaNeural
+Three oscillators: a saw, a triangle, a sine, tuned slightly apart so they shimmer against each other.

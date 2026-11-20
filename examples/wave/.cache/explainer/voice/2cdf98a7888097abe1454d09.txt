@@ -1,0 +1,2 @@
+en-US-AvaNeural
+There is no waveform video playing on a loop. No pre-rendered spectrum.

@@ -1,0 +1,28 @@
+{
+  "kit": "{{KIT_VERSION}}",
+  "title": "{{TITLE}}",
+  "slug": "{{SLUG}}",
+  "targetSeconds": 195,
+  "theme": {
+    "chrome": {
+      "left": "{{TITLE}}",
+      "center": "",
+      "right": ""
+    }
+  },
+  "voice": {
+    "name": "en-US-AvaNeural",
+    "fallback": "en-US-EmmaNeural"
+  },
+  "mix": {
+    "bed": null
+  },
+  "capture": {
+    "url": "http://localhost:5173",
+    "selector": "#stage"
+  },
+  "verify": {
+    "frameAt": 16,
+    "minSsim": 0.985
+  }
+}

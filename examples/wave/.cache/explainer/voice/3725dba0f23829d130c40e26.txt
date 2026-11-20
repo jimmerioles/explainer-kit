@@ -1,0 +1,2 @@
+en-US-AvaNeural
+It looks a hundred and twenty milliseconds ahead, and schedules real notes on the audio clock, so the pattern stays steady even when the drawing gets busy.

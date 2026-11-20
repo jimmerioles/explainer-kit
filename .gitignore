@@ -1,0 +1,9 @@
+node_modules/
+*.log
+.DS_Store
+
+# generated per-project output
+examples/*/docs/explainer/build/
+
+# voice golden cache
+golden/cache/

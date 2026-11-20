@@ -1,0 +1,2 @@
+en-US-AvaNeural
+No audio files, no runtime libraries, no backend.

@@ -1,0 +1,2 @@
+en-US-AvaNeural
+It's a list of note events, played through the same voices you play by hand.

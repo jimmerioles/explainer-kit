@@ -1,0 +1,104 @@
+{
+  "title": "Wave: the playable synth, explained",
+  "segments": [
+    {
+      "id": "intro",
+      "title": "Cold open",
+      "sentences": [
+        "Here's a strange idea for a landing page.",
+        "Don't tell people about the instrument. Hand them one.",
+        "Eight keys. Five moods. No samples.",
+        "This is Wave, a synthesizer that lives entirely in the browser.",
+        "And everything you're about to see is drawn from the sound it makes."
+      ]
+    },
+    {
+      "id": "thesis",
+      "title": "The signal",
+      "sentences": [
+        "There is no waveform video playing on a loop. No pre-rendered spectrum.",
+        "The orb on the stage is reading the actual audio signal, sixty times a second, and painting what it finds.",
+        "The page isn't illustrating sound. It's listening to it."
+      ]
+    },
+    {
+      "id": "voice",
+      "title": "One voice",
+      "sentences": [
+        "Follow one key press.",
+        "You hold the A key, and a voice wakes up.",
+        "Three oscillators: a saw, a triangle, a sine, tuned slightly apart so they shimmer against each other.",
+        "An envelope shapes the note. A fast attack, a decay to a sustain, and a long release when you let go.",
+        "Eight voices like this one can run at once."
+      ]
+    },
+    {
+      "id": "chain",
+      "title": "The shared chain",
+      "sentences": [
+        "They all feed one shared chain.",
+        "A resonant low-pass filter.",
+        "A stereo ping-pong delay, and a convolution reverb built from a generated impulse response.",
+        "Then a soft clipper and a compressor, so a fistful of keys never turns into a mess.",
+        "At the end, an analyser takes a copy of the signal for the stage."
+      ]
+    },
+    {
+      "id": "mute",
+      "title": "The quiet trick",
+      "sentences": [
+        "Notice where the mute switch sits. After the analyser.",
+        "So when you turn the sound off, the speakers go quiet, but the instrument keeps breathing on screen.",
+        "The visuals never lie, even in silence."
+      ]
+    },
+    {
+      "id": "orb",
+      "title": "Two views",
+      "sentences": [
+        "The orb reads two views of the same signal.",
+        "The time domain, a waveform wrapped into a ring.",
+        "And the frequency domain, a spray of ticks for the energy in each band.",
+        "Springs smooth the level, the bass and the treble, so the motion has weight.",
+        "It settles, instead of twitching."
+      ]
+    },
+    {
+      "id": "clock",
+      "title": "The clock",
+      "sentences": [
+        "Time is the other instrument.",
+        "The arpeggiator doesn't trust the page clock.",
+        "It looks a hundred and twenty milliseconds ahead, and schedules real notes on the audio clock, so the pattern stays steady even when the drawing gets busy."
+      ]
+    },
+    {
+      "id": "demo",
+      "title": "First Light is data",
+      "sentences": [
+        "And the demo, First Light, isn't a recording either.",
+        "It's a list of note events, played through the same voices you play by hand.",
+        "The filter rides the arrangement. The moment you touch it, control comes back to you."
+      ]
+    },
+    {
+      "id": "presets",
+      "title": "Five moods",
+      "sentences": [
+        "Five presets reshape the oscillators, the filter, the envelope, the delay and the space.",
+        "Each one also gets its own way of moving.",
+        "Glass shimmers. Tape drags. Haze drifts. Pulse snaps. Bloom breathes."
+      ]
+    },
+    {
+      "id": "close",
+      "title": "A small instrument",
+      "sentences": [
+        "All of it is TypeScript, Canvas and the Web Audio API.",
+        "No audio files, no runtime libraries, no backend.",
+        "Just a small instrument, with a page wrapped around it.",
+        "Hold a key, and the page answers."
+      ]
+    }
+  ]
+}

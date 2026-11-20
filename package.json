@@ -1,0 +1,21 @@
+{
+  "name": "explainer-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic house-style explainer films: narration, canvas render, mix and master.",
+  "bin": {
+    "explainer": "./bin/explainer.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "doctor": "node bin/explainer.mjs doctor",
+    "verify": "node bin/explainer.mjs verify"
+  },
+  "dependencies": {
+    "msedge-tts": "2.1.1",
+    "playwright-core": "1.65.1"
+  }
+}
