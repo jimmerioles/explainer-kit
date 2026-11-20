@@ -42,6 +42,12 @@ export function startServer(project, { port = 0 } = {}) {
     const url = new URL(req.url, "http://127.0.0.1");
     let pathname = decodeURIComponent(url.pathname);
 
+    if (pathname === "/favicon.ico") {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
     if (pathname === "/" || pathname === "/index.html") {
       res.writeHead(200, { "content-type": MIME[".html"], "cache-control": "no-store" });
       fs.createReadStream(path.join(KIT_ROOT, "render", "index.html")).pipe(res);
