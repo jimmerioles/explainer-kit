@@ -1,11 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ensureDir } from "./paths.mjs";
+import { rendererConfig } from "./config.mjs";
 import { startServer } from "./server.mjs";
 import { launch, openFilm } from "./browser.mjs";
 
+export function ensureRenderJson(config, project) {
+  const build = ensureDir(project.build);
+  const file = path.join(build, "render.json");
+  fs.writeFileSync(file, JSON.stringify(rendererConfig(config), null, 2));
+  return file;
+}
+
 export async function renderFilm(config, project, { log = console.log } = {}) {
   const build = ensureDir(project.build);
+  ensureRenderJson(config, project);
   const server = await startServer(project);
   const browser = await launch();
   try {
@@ -33,6 +42,7 @@ export async function renderFilm(config, project, { log = console.log } = {}) {
 
 export async function stills(config, project, { at = [], log = console.log } = {}) {
   const build = ensureDir(project.build);
+  ensureRenderJson(config, project);
   const dir = ensureDir(path.join(build, "stills"));
   const server = await startServer(project);
   const browser = await launch();

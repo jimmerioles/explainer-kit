@@ -60,7 +60,9 @@ explainer script     # build/script.md, the companion doc
 `explainer build` runs narrate, render, mix and master in one go. `verify` stays
 a separate, deliberate step. `npm run check` runs the fast repository checks:
 syntax, JSON, config pins, stale paths and prose rules, with no browser or
-ffmpeg required.
+ffmpeg required. `npm run clean` removes generated intermediates and the local
+voice cache, but keeps `film.mp4`, `poster.jpg`, `timeline.json` and
+`report.json`.
 
 ## What is locked
 

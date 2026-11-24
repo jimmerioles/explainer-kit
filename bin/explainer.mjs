@@ -6,7 +6,7 @@ import { parseArgs } from "node:util";
 import { findProject, projectPaths, ensureDir, KIT_VERSION } from "../src/paths.mjs";
 import { loadConfig } from "../src/config.mjs";
 import { narrate } from "../src/narrate.mjs";
-import { renderFilm, stills, goldenFrame } from "../src/render.mjs";
+import { renderFilm, stills, goldenFrame, ensureRenderJson } from "../src/render.mjs";
 import { mixAudio } from "../src/mix.mjs";
 import { masterFilm } from "../src/master.mjs";
 import { verify } from "../src/verify.mjs";
@@ -177,6 +177,7 @@ async function main() {
     return;
   }
   if (command === "serve") {
+    ensureRenderJson(config, project);
     const server = await startServer(project);
     console.log(`preview ${server.url}`);
     await new Promise((resolve) => {

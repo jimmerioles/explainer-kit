@@ -173,6 +173,17 @@ genuinely improved.
 - [ ] MP4 is a release asset, not a commit
 - [ ] `config.json` pins the kit version that made it
 
+## Housekeeping
+
+```bash
+npm run clean
+```
+
+This removes `video.webm`, the narration and mix WAVs, stills, verify frames and
+the local voice cache. It keeps `film.mp4`, `poster.jpg`, `timeline.json` and
+`report.json`, so the film and its gate report survive. Rebuild with `narrate`,
+`render`, `mix` and `master` when you need the intermediates again.
+
 ## Failure modes
 
 **Voice generation fails after retries.** The kit falls back to `voice.fallback`

@@ -13,6 +13,7 @@
   "scripts": {
     "doctor": "node bin/explainer.mjs doctor",
     "check": "node scripts/check.mjs",
+    "clean": "node scripts/clean.mjs",
     "verify": "node bin/explainer.mjs verify",
     "verify:wave": "node bin/explainer.mjs verify --project examples/wave"
   },

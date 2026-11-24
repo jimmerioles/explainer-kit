@@ -26,3 +26,5 @@
   `fonts/OFL.txt`.
 - Documented how a new project copies the canonical house bed from the root
   project, so no external music tool or research folder is needed.
+- Added `npm run clean` to remove generated intermediates and voice caches while
+  keeping the film, poster, timeline and report.
