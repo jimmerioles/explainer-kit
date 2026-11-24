@@ -6,7 +6,7 @@ import { parseArgs } from "node:util";
 import { findProject, projectPaths, ensureDir, KIT_VERSION } from "../src/paths.mjs";
 import { loadConfig } from "../src/config.mjs";
 import { narrate } from "../src/narrate.mjs";
-import { renderFilm, stills } from "../src/render.mjs";
+import { renderFilm, stills, goldenFrame } from "../src/render.mjs";
 import { mixAudio } from "../src/mix.mjs";
 import { masterFilm } from "../src/master.mjs";
 import { verify } from "../src/verify.mjs";
@@ -23,6 +23,7 @@ const HELP = `explainer ${KIT_VERSION}
   explainer narrate   [--force]
   explainer capture
   explainer stills    [--at 3,22,39]
+  explainer golden    [--at 16]
   explainer render
   explainer mix
   explainer master
@@ -76,22 +77,26 @@ async function generateScriptDoc(config, project) {
 
 async function capture(config, project) {
   const out = ensureDir(path.join(project.explainer, "assets"));
-  if (!config.capture?.url) throw new Error("Set capture.url in config.json, or add docs/explainer/capture.mjs");
+  const captureConfig = config.capture ?? {};
+  const hasHook = fs.existsSync(project.capture);
+  if (!hasHook && !captureConfig.url) {
+    throw new Error("Set capture.url in config.json, or add docs/explainer/capture.mjs");
+  }
   const browser = await launch();
   try {
     const page = await browser.newPage({
-      viewport: config.capture.viewport ?? { width: 1440, height: 900 },
+      viewport: captureConfig.viewport ?? { width: 1440, height: 900 },
       acceptDownloads: true,
     });
-    if (fs.existsSync(project.capture)) {
+    if (hasHook) {
       const hook = await import(`${pathToFileURL(project.capture).href}?t=${Date.now()}`);
       const files = await hook.default({ page, config, out, project });
       console.log(`captured ${files.join(", ")}`);
     } else {
-      await page.goto(config.capture.url, { waitUntil: "networkidle" });
+      await page.goto(captureConfig.url, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(600);
-      const selector = config.capture.selector ?? "body";
+      const selector = captureConfig.selector ?? "body";
       const target = path.join(out, "app.png");
       await page.locator(selector).screenshot({ path: target });
       console.log(`captured ${path.relative(project.root, target)}`);
@@ -151,6 +156,10 @@ async function main() {
       ? values.at.split(",").map(Number).filter(Number.isFinite)
       : [];
     return void (await stills(config, project, { at }));
+  }
+  if (command === "golden") {
+    const at = values.at ? Number(values.at.split(",")[0]) : undefined;
+    return void (await goldenFrame(config, project, { at }));
   }
   if (command === "render") return void (await renderFilm(config, project));
   if (command === "mix") return void mixAudio(config, project);

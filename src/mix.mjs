@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { duration, ffmpeg, loudness, measureLoudnorm, probe } from "./audio.mjs";
+import { duration, ffmpeg, loudness, measureLoudnorm } from "./audio.mjs";
 import { ensureDir } from "./paths.mjs";
+import { inspectBed } from "./bed.mjs";
 
 function escapeFilterValue(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/:/g, "\\:");
@@ -12,9 +13,22 @@ export function mixAudio(config, project, { log = console.log } = {}) {
   const narration = path.join(build, "narration.wav");
   if (!fs.existsSync(narration)) throw new Error("No narration.wav. Run `explainer narrate` first.");
   const seconds = duration(narration);
-  const bedRel = config.mix.bed;
-  const bed = bedRel ? path.resolve(project.explainer, bedRel) : null;
-  if (bed && !fs.existsSync(bed)) throw new Error(`Missing music bed: ${bed}`);
+  const bedInfo = inspectBed(config, project, { filmSeconds: seconds });
+  if (bedInfo.missing) throw new Error(`Missing music bed: ${bedInfo.file}`);
+  if (bedInfo.tooShort) {
+    throw new Error(
+      `Music bed is ${bedInfo.seconds.toFixed(2)}s but the narration is ${seconds.toFixed(2)}s. ` +
+        "Extend the bed or trim the film; the kit will not pad it with silence.",
+    );
+  }
+  const bed = bedInfo.file;
+  if (bedInfo.configured) {
+    log(
+      `bed ${bedInfo.name} ${bedInfo.seconds.toFixed(2)}s, ` +
+        `${bedInfo.loudness.integrated} LUFS, ${bedInfo.loudness.truePeak} dBFS`,
+    );
+    if (!bedInfo.levelOk || !bedInfo.peakOk) log(`warning: ${bedInfo.reason}`);
+  }
 
   const pre = path.join(build, "mix-pre.wav");
   const sr = config.mix.master.sampleRate;
@@ -79,7 +93,7 @@ export function mixAudio(config, project, { log = console.log } = {}) {
   return { file: out, loudness: measuredOut, seconds: duration(out) };
 }
 
-export function chaptersFor(config, project, timeline) {
+export function chaptersFor(project, timeline) {
   const chapters = timeline.segments.map((seg, i) => ({
     start: i === 0 ? 0 : seg.start,
     end: i === timeline.segments.length - 1 ? timeline.duration : timeline.segments[i + 1].start,
@@ -99,5 +113,3 @@ export function chaptersFor(config, project, timeline) {
   fs.writeFileSync(file, lines.join("\n") + "\n");
   return { file, chapters };
 }
-
-export { probe };

@@ -1,5 +1,5 @@
 {
-  "kit": "1.0.0",
+  "kit": "1.1.0",
   "title": "Wave: the playable synth, explained",
   "slug": "wave",
   "targetSeconds": 195,
@@ -11,8 +11,9 @@
     }
   },
   "voice": {
-    "name": "en-US-AvaNeural",
-    "fallback": "en-US-EmmaNeural"
+    "engine": "kokoro",
+    "name": "af_heart",
+    "fallback": "af_bella"
   },
   "mix": {
     "bed": "music.m4a"
@@ -24,7 +25,6 @@
   },
   "verify": {
     "frameAt": 16,
-    "golden": "golden/frame.png",
-    "minSsim": 0.985
+    "golden": "golden/frame.png"
   }
 }

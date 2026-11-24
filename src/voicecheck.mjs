@@ -1,36 +1,64 @@
 import fs from "node:fs";
 import path from "node:path";
 import { KIT_ROOT } from "./paths.mjs";
+import { resolveEngine } from "./voices.mjs";
 import { synthesize } from "./tts.mjs";
 import { duration, loudness } from "./audio.mjs";
 
 const TEXT = "The page isn't illustrating sound. It's listening to it.";
-const GOLDEN = path.join(KIT_ROOT, "golden", "voice.json");
+
+function goldenPaths(engine, name) {
+  const slug = `${engine}-${name}`.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  const dir = path.join(KIT_ROOT, "golden", "voices");
+  fs.mkdirSync(dir, { recursive: true });
+  const ext = engine === "kokoro" ? "wav" : "mp3";
+  return {
+    dir,
+    golden: path.join(dir, `${slug}.json`),
+    audio: path.join(dir, `${slug}.${ext}`),
+  };
+}
 
 export async function voicecheck(config, { update = false, log = console.log } = {}) {
   const voice = config.voice;
-  const dir = path.join(KIT_ROOT, "golden");
-  fs.mkdirSync(dir, { recursive: true });
-  const cacheDir = path.join(dir, "cache");
+  const engine = resolveEngine(voice);
+  const paths = goldenPaths(engine, voice.name);
+  const cacheDir = path.join(KIT_ROOT, "golden", "cache");
   fs.mkdirSync(cacheDir, { recursive: true });
-  const result = await synthesize({ voice: { ...voice, name: voice.name }, text: TEXT, cacheDir, log });
+  const result = await synthesize({
+    voice: { ...voice, engine },
+    text: TEXT,
+    cacheDir,
+    log,
+  });
   const seconds = duration(result.file);
   const level = loudness(result.file);
-  const sample = { text: TEXT, voice: voice.name, rate: voice.rate, pitch: voice.pitch, seconds, lufs: level.integrated };
-
-  if (update || !fs.existsSync(GOLDEN)) {
-    fs.copyFileSync(result.file, path.join(dir, "voice.mp3"));
-    fs.writeFileSync(GOLDEN, JSON.stringify(sample, null, 2) + "\n");
-    log(`golden voice written: ${seconds.toFixed(2)}s, ${level.integrated} LUFS`);
-    return { ok: true, sample, updated: true };
+  const sample = {
+    text: TEXT,
+    engine,
+    voice: voice.name,
+    seconds,
+    lufs: level.integrated,
+  };
+  if (engine === "kokoro") sample.speed = voice.speed ?? 0.88;
+  if (engine === "edge") {
+    sample.rate = voice.rate ?? null;
+    sample.pitch = voice.pitch ?? null;
   }
 
-  const golden = JSON.parse(fs.readFileSync(GOLDEN, "utf8"));
+  if (update || !fs.existsSync(paths.golden)) {
+    fs.copyFileSync(result.file, paths.audio);
+    fs.writeFileSync(paths.golden, JSON.stringify(sample, null, 2) + "\n");
+    log(`golden voice written: ${engine} ${voice.name}, ${seconds.toFixed(2)}s, ${level.integrated} LUFS`);
+    return { ok: true, sample, updated: true, golden: paths.golden };
+  }
+
+  const golden = JSON.parse(fs.readFileSync(paths.golden, "utf8"));
   const drift = Math.abs(seconds - golden.seconds) / golden.seconds;
   const loud = Math.abs(level.integrated - golden.lufs);
   const ok = drift <= 0.08 && loud <= 1.5;
   log(
-    `${ok ? "ok  " : "DRIFT"} voice ${voice.name}  ` +
+    `${ok ? "ok  " : "DRIFT"} voice ${engine} ${voice.name}  ` +
       `${seconds.toFixed(2)}s vs ${golden.seconds.toFixed(2)}s, ` +
       `${level.integrated} vs ${golden.lufs} LUFS`,
   );

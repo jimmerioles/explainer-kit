@@ -1,2 +1,0 @@
-en-US-AvaNeural
-The orb reads two views of the same signal.

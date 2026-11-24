@@ -11,8 +11,9 @@
     }
   },
   "voice": {
-    "name": "en-US-AvaNeural",
-    "fallback": "en-US-EmmaNeural"
+    "engine": "kokoro",
+    "name": "af_heart",
+    "fallback": "af_bella"
   },
   "mix": {
     "bed": null
@@ -23,6 +24,6 @@
   },
   "verify": {
     "frameAt": 16,
-    "minSsim": 0.985
+    "golden": "golden/frame.png"
   }
 }

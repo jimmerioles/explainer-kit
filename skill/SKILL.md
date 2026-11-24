@@ -11,7 +11,7 @@ description: >
 
 # Explainer video
 
-The pipeline lives in `~/Work/jimmerioles/explainer-kit`, version `1.0.0`.
+The pipeline lives in `~/Work/jimmerioles/explainer-kit`, version `1.1.0`.
 Read `<kit>/STYLE.md` before writing the script, and `<kit>/PRODUCTION.md` for
 the full sequence. `examples/wave/` in the kit is the reference film: when in
 doubt, it shows what good looks like.
@@ -52,16 +52,19 @@ If any check fails, fix the environment first.
    ```
 
    The timeline is now fixed. If the runtime is wrong, edit the script and run
-   `narrate` again before touching any scene. If the narration sounds off, run
-   `node $KIT/bin/explainer.mjs voicecheck` and compare against the house sample.
+   `narrate` again before touching any scene. The first Kokoro run downloads the
+   model (about 300 MB); later runs are local. If the narration sounds off, run
+   `node $KIT/bin/explainer.mjs voicecheck` and compare against
+   `golden/voices/<engine>-<voice>.json`.
 
 4. **Write the scenes.** Edit `docs/explainer/scenes.js`. Every segment id needs
    a scene function. Use `__default` for segments that share a layout. Read the
    timeline through `sc`, never hardcode chapter times.
 
 5. **Capture the product.** Set `capture.url` and `capture.selector` in
-   `config.json`, or replace `capture.example.mjs` with a hook that drives the
-   UI. Save stills into `docs/explainer/assets/`, then name them in `assets.js`.
+   `config.json`, or edit `docs/explainer/capture.mjs` with a hook that drives
+   the UI. Save stills into `docs/explainer/assets/`, then name them in
+   `assets.js`.
 
 6. **Look before rendering.**
 
@@ -70,11 +73,24 @@ If any check fails, fix the environment first.
    ```
 
    View all ten PNGs in `docs/explainer/build/stills/`. Fix layout here. A full
-   render is the expensive way to find a title that overflows.
+   render is the expensive way to find a title that overflows. When the look is
+   right, lock the frame `verify` will compare:
 
-7. **Music.** Put the bed at `docs/explainer/music.m4a` and set `mix.bed`. If the
-   project has no music, set `"bed": null` and say so in the handoff. Do not
-   invent a synthetic bed without asking.
+   ```bash
+   node $KIT/bin/explainer.mjs golden
+   ```
+
+   Inspect `golden/frame.png` before committing it. Re-run `golden` only after an
+   intentional visual change.
+
+7. **Music.** Put the bed at `docs/explainer/music.m4a` and set `mix.bed`. The
+   house bed is the `tech` score: 100 BPM, A major, seed 1, rendered
+   locally and extended to the film. The Wave fixture uses the same bed, trimmed
+   to its length. A bed must be 48 kHz stereo, -24.5 LUFS within 3 LU, at or
+   below -2 dBFS true peak, and at least as long as the narration. Record the
+   engine, style, BPM, key, seed and license in `music.json`. If the project has
+   no music, set `"bed": null` and say so in the handoff. Do not invent a
+   synthetic bed without asking.
 
 8. **Build and gate.**
 
@@ -139,18 +155,26 @@ fork the helper into the project.
 ## Non-negotiables
 
 - 1920 × 1080, 30 fps, H.264 CRF 19, AAC 192k, faststart.
-- One house voice, one voice chain, one mix chain. A project may pick the voice,
-  not the processing.
+- One house voice, Kokoro `af_heart` at speed 0.88, one voice chain, one mix
+  chain. A project may pick a different voice only deliberately; Edge is a
+  fallback.
+- One house bed, `tech` at 100 BPM, A major, seed 1. It is 48 kHz
+  stereo, -24.5 LUFS within 3 LU, at or below -2 dBFS true peak, and at least as
+  long as the narration.
 - -16.0 LUFS integrated, true peak at or below -1.5 dBFS.
 - Ten chapters, 3:00 to 3:30, one idea per chapter.
 - No em dashes in the narration.
-- The MP4 is never committed. The script, config, assets and poster are.
+- The MP4 is never committed. The script, config, assets, music metadata and
+  poster are.
 
 ## Failure modes
 
 - **`verify` says script drift:** re-run `narrate`, then `render`.
-- **`verify` says voice fallback:** Edge failed. Re-run `narrate` later. Do not
-  ship the fallback by accident.
+- **`verify` says voice fallback:** the narration fell back. For Kokoro, check
+  the model download and `npm install`; for Edge, re-run later. Do not ship the
+  fallback by accident.
+- **`verify` says the music bed is short or loud:** extend or normalize the bed.
+  Do not lower the gate, and do not let `mix` pad silence.
 - **A frame looks wrong only in the encoded file:** check the still at the same
   timestamp first. If the still is right, the bug is in encode settings, not
   layout.

@@ -1,2 +1,0 @@
-en-US-AvaNeural
-The time domain, a waveform wrapped into a ring.

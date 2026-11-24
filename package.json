@@ -1,6 +1,6 @@
 {
   "name": "explainer-kit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "Deterministic house-style explainer films: narration, canvas render, mix and master.",
@@ -12,10 +12,17 @@
   },
   "scripts": {
     "doctor": "node bin/explainer.mjs doctor",
-    "verify": "node bin/explainer.mjs verify"
+    "check": "node scripts/check.mjs",
+    "verify": "node bin/explainer.mjs verify",
+    "verify:wave": "node bin/explainer.mjs verify --project examples/wave"
   },
   "dependencies": {
+    "kokoro-js": "1.2.1",
     "msedge-tts": "2.1.1",
-    "playwright-core": "1.65.1"
+    "playwright-core": "1.65.1",
+    "sharp": "0.35.5"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
   }
 }

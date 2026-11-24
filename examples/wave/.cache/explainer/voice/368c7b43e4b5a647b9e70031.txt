@@ -1,2 +1,0 @@
-en-US-AvaNeural
-At the end, an analyser takes a copy of the signal for the stage.

@@ -1,2 +1,0 @@
-en-US-AvaNeural
-Just a small instrument, with a page wrapped around it.

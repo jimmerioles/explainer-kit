@@ -1,2 +1,0 @@
-en-US-AvaNeural
-This is Wave, a synthesizer that lives entirely in the browser.

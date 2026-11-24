@@ -7,3 +7,6 @@ examples/*/docs/explainer/build/
 
 # voice golden cache
 golden/cache/
+# explainer build output and narration cache
+docs/explainer/build/
+**/.cache/explainer/

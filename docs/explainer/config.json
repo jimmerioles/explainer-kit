@@ -1,0 +1,29 @@
+{
+  "kit": "1.1.0",
+  "title": "explainer-kit, explained",
+  "slug": "explainer-kit",
+  "targetSeconds": 195,
+  "theme": {
+    "chrome": {
+      "left": "EXPLAINER KIT",
+      "center": "A DETERMINISTIC PIPELINE",
+      "right": "KIT 1.1.0"
+    }
+  },
+  "voice": {
+    "engine": "kokoro",
+    "name": "af_heart",
+    "fallback": "af_bella"
+  },
+  "mix": {
+    "bed": "music.m4a"
+  },
+  "capture": {
+    "url": "http://localhost:5173",
+    "selector": "#stage"
+  },
+  "verify": {
+    "frameAt": 152,
+    "golden": "golden/frame.png"
+  }
+}

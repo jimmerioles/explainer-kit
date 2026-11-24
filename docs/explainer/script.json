@@ -1,0 +1,115 @@
+{
+  "title": "explainer-kit, explained",
+  "segments": [
+    {
+      "id": "intro",
+      "title": "Cold open",
+      "sentences": [
+        "This is a frame from a finished film.",
+        "It came from one sentence: you hold the A key, and a voice wakes up.",
+        "Between the sentence and the frame sit a script, a voice, a timeline, a renderer, a mix and the gates.",
+        "A one-off film is a memory. A series is a system."
+      ],
+      "notes": "Open on a real Wave frame. Pull back to the sentence that produced it. End on the thesis."
+    },
+    {
+      "id": "layers",
+      "title": "Three layers",
+      "sentences": [
+        "The machine lives in explainer-kit: render, voice, mix, master and verify.",
+        "The brain is a skill: when to run each command, and what to check.",
+        "The content lives in the project: script, scenes, captures, music.",
+        "Numbers in the kit, procedure in the skill, content in the project."
+      ],
+      "notes": "Three stacked bands with a hard boundary between them. Light each band on its sentence."
+    },
+    {
+      "id": "init",
+      "title": "One command",
+      "sentences": [
+        "A new film starts with one command.",
+        "explainer init writes the explainer folder and pins the kit version.",
+        "config.json names the few things a project may change.",
+        "script.json holds the argument, scenes.js draws it, assets.js names the captures."
+      ],
+      "notes": "Terminal card on the left, file tree on the right. The kit pin is coral."
+    },
+    {
+      "id": "script",
+      "title": "The spine",
+      "sentences": [
+        "The script is the spine.",
+        "Ten chapters, one idea each, three to five sentences.",
+        "Write for the ear: second person, present tense, short clauses.",
+        "Read it aloud with a timer. The target is three fifteen."
+      ],
+      "notes": "Ten chapter blocks. One chapter opens into its sentences. A 3:15 timer arc fills."
+    },
+    {
+      "id": "narrate",
+      "title": "The clock",
+      "sentences": [
+        "Narration turns sentences into time.",
+        "One house voice reads each line, cached by a hash of text and settings.",
+        "The kit measures every clip and writes timeline.json.",
+        "Run it again, and the same words land at the same times."
+      ],
+      "notes": "Sentence to hash to cached audio to measured blocks to timeline.json. Real Wave times: 43.920 to 47.120."
+    },
+    {
+      "id": "scenes",
+      "title": "Drawing time",
+      "sentences": [
+        "Scenes are functions, not slides.",
+        "Each segment id maps to a function of time and timeline.",
+        "The diagram builds as the sentence explains it, then holds.",
+        "The kit supplies the frame, type and chrome. The project supplies the argument."
+      ],
+      "notes": "Show the function signature, then the voice frame with a time readout. The diagram is tied to sentence beats."
+    },
+    {
+      "id": "stills",
+      "title": "Look first",
+      "sentences": [
+        "A full render takes minutes. A still takes seconds.",
+        "The stills command draws one frame per chapter.",
+        "You look at all ten before the encode.",
+        "serve opens the same renderer in a browser, live."
+      ],
+      "notes": "Contact sheet of ten real Wave stills. Highlight one. Then a live preview window."
+    },
+    {
+      "id": "render",
+      "title": "The chain",
+      "sentences": [
+        "The renderer paints thirty frames a second into a WebM.",
+        "The mix ducks the music and lands at minus sixteen LUFS.",
+        "The master writes H.264, AAC, chapters and faststart.",
+        "The intermediates are not the deliverable. film.mp4 is."
+      ],
+      "notes": "Three stages with real constants. Frame counter, loudness meter, MP4 box."
+    },
+    {
+      "id": "verify",
+      "title": "The gates",
+      "sentences": [
+        "Verify is what makes the series trustworthy.",
+        "It checks the script hash, and refuses a voice that fell back.",
+        "It checks duration, format, chapters, loudness and peak, then the golden frame.",
+        "A font fallback or a drifted chapter fails here, not later."
+      ],
+      "notes": "Gate rows check on. Show the two real frames and the SSIM floor. End on a failed gate in coral, then all green."
+    },
+    {
+      "id": "close",
+      "title": "One sentence",
+      "sentences": [
+        "The Wave fixture proves it: same script, same cache, same film.",
+        "Change the script, and the timeline moves. The house only moves when you choose.",
+        "Every project pins the version that made it.",
+        "A sentence goes in. A film comes out. And it can come out again."
+      ],
+      "notes": "Return to the sentence and the frame. The chain folds into a loop. Last line lands in silence."
+    }
+  ]
+}

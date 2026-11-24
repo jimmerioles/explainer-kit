@@ -59,3 +59,15 @@ export async function stills(config, project, { at = [], log = console.log } = {
     await server.close();
   }
 }
+
+export async function goldenFrame(config, project, { at, log = console.log } = {}) {
+  const time = Number.isFinite(at) ? at : config.verify.frameAt;
+  const files = await stills(config, project, { at: [time], log });
+  if (!files.length) throw new Error(`Could not render a frame at ${time}s`);
+  const rel = config.verify.golden ?? path.join("golden", "frame.png");
+  const target = path.resolve(project.explainer, rel);
+  ensureDir(path.dirname(target));
+  fs.copyFileSync(files[0], target);
+  log(`golden ${path.relative(project.root, target)} at ${time}s`);
+  return { file: target, at: time };
+}

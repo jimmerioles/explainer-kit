@@ -13,15 +13,22 @@ export function loadScript(project) {
   const ids = new Set();
   script.segments = script.segments.map((seg, i) => {
     if (!seg.id) throw new Error(`Segment ${i} has no id`);
+    if (!/^[a-z0-9][a-z0-9_-]*$/.test(seg.id)) {
+      throw new Error(
+        `Segment id "${seg.id}" must be lowercase letters, numbers, hyphens or underscores`,
+      );
+    }
     if (ids.has(seg.id)) throw new Error(`Duplicate segment id "${seg.id}"`);
     ids.add(seg.id);
     if (!Array.isArray(seg.sentences) || !seg.sentences.length) {
       throw new Error(`Segment "${seg.id}" has no sentences`);
     }
+    const sentences = seg.sentences.map((s) => String(s).trim()).filter(Boolean);
+    if (!sentences.length) throw new Error(`Segment "${seg.id}" has no sentences`);
     return {
       id: seg.id,
       title: seg.title ?? seg.id.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase()),
-      sentences: seg.sentences.map((s) => String(s).trim()).filter(Boolean),
+      sentences,
       notes: seg.notes ?? null,
     };
   });

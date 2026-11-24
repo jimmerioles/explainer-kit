@@ -1,2 +1,0 @@
-en-US-AvaNeural
-A stereo ping-pong delay, and a convolution reverb built from a generated impulse response.

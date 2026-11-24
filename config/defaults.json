@@ -1,4 +1,5 @@
 {
+  "targetSeconds": 195,
   "video": {
     "width": 1920,
     "height": 1080,
@@ -13,9 +14,11 @@
     "audioBitrate": "192k"
   },
   "voice": {
-    "engine": "edge",
-    "name": "en-US-AvaNeural",
-    "fallback": "en-US-EmmaNeural",
+    "engine": "kokoro",
+    "name": "af_heart",
+    "fallback": "af_bella",
+    "speed": 0.88,
+    "sampleRate": 24000,
     "rate": "-3%",
     "pitch": "-3Hz",
     "format": "audio-24khz-48kbitrate-mono-mp3",
@@ -30,6 +33,8 @@
   },
   "mix": {
     "bedGainDb": 0,
+    "bedTargetLufs": -24.5,
+    "bedPeakCeiling": -2.0,
     "fadeOut": 2.5,
     "duck": {
       "threshold": 0.06,
@@ -39,7 +44,7 @@
     },
     "master": {
       "lufs": -16,
-      "truePeak": -1.5,
+      "truePeak": -2.5,
       "lra": 9,
       "sampleRate": 48000,
       "channels": 2
@@ -78,15 +83,13 @@
   },
   "verify": {
     "lufsTolerance": 0.3,
-    "truePeakCeiling": -1.0,
+    "truePeakCeiling": -1.5,
     "durationTolerance": 0.15,
     "targetTolerance": 20,
+    "bedDurationTolerance": 0.1,
+    "bedLufsTolerance": 3,
     "minSsim": 0.985,
-    "frameAt": 16
-  },
-  "release": {
-    "tagPattern": "explainer-v{n}",
-    "assetName": "explainer.mp4",
-    "posterName": "explainer-poster.jpg"
+    "frameAt": 16,
+    "golden": "golden/frame.png"
   }
 }

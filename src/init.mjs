@@ -2,10 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { KIT_ROOT, KIT_VERSION, CONFIG_REL } from "./paths.mjs";
 
-const GITIGNORE = `# explainer build output and narration cache
-docs/explainer/build/
-.cache/explainer/
-`;
+const IGNORE_LINES = ["docs/explainer/build/", ".cache/explainer/"];
 
 function fill(text, vars) {
   return text.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? "");
@@ -27,26 +24,32 @@ export function init(root, { title, slug, force = false, log = console.log } = {
 
   const vars = { TITLE: title, SLUG: projectSlug, KIT_VERSION };
   const templateDir = path.join(KIT_ROOT, "templates", "project");
-  for (const entry of fs.readdirSync(templateDir)) {
-    const target = path.join(explainer, entry.replace(/\.example$/, ""));
+  for (const entry of fs.readdirSync(templateDir, { withFileTypes: true })) {
+    if (!entry.isFile() || entry.name.startsWith(".")) continue;
+    const target = path.join(explainer, entry.name);
     if (fs.existsSync(target) && !force) continue;
-    fs.writeFileSync(target, fill(fs.readFileSync(path.join(templateDir, entry), "utf8"), vars));
+    fs.writeFileSync(target, fill(fs.readFileSync(path.join(templateDir, entry.name), "utf8"), vars));
   }
 
   const ignore = path.join(root, ".gitignore");
   const current = fs.existsSync(ignore) ? fs.readFileSync(ignore, "utf8") : "";
-  if (!current.includes(".cache/explainer")) {
-    fs.appendFileSync(ignore, (current.endsWith("\n") || !current ? "" : "\n") + GITIGNORE);
+  const missing = IGNORE_LINES.filter((line) => !current.includes(line));
+  if (missing.length) {
+    fs.appendFileSync(
+      ignore,
+      (current && !current.endsWith("\n") ? "\n" : "") + `# explainer build output and narration cache\n${missing.join("\n")}\n`,
+    );
   }
 
   log(`created ${path.relative(root, explainer)} for "${title}" (kit ${KIT_VERSION})`);
   log("");
   log("next:");
   log("  1. write script.json: one segment per chapter, one sentence per line");
-  log("  2. fill scenes.js and assets.js");
+  log("  2. fill scenes.js, assets.js and capture.mjs");
   log("  3. explainer narrate");
   log("  4. explainer stills   (inspect the look)");
-  log("  5. explainer render && explainer mix && explainer master");
-  log("  6. explainer verify");
+  log("  5. explainer golden   (lock the frame)");
+  log("  6. explainer render && explainer mix && explainer master");
+  log("  7. explainer verify");
   return projectSlug;
 }

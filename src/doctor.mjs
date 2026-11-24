@@ -3,6 +3,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { KIT_ROOT, KIT_VERSION } from "./paths.mjs";
 import { chromePath } from "./browser.mjs";
+import { inspectBed } from "./bed.mjs";
 
 function has(bin, args = ["-version"]) {
   try {
@@ -48,7 +49,7 @@ export function doctor(project, config, log = console.log) {
     : 0;
   check("fonts", fs.existsSync(css) && woff >= 12, `${woff} woff2 files`);
 
-  for (const dep of ["msedge-tts", "playwright-core"]) {
+  for (const dep of ["msedge-tts", "playwright-core", "kokoro-js"]) {
     let ok = true;
     try {
       const file = path.join(KIT_ROOT, "node_modules", dep, "package.json");
@@ -62,6 +63,24 @@ export function doctor(project, config, log = console.log) {
   if (config) {
     check("kit pin", !config.kit.drift, `project pins ${config.kit.pinned ?? "none"}, kit is ${KIT_VERSION}`);
     check("project config", true, path.relative(project.root, project.config));
+    const golden = path.resolve(project.explainer, config.verify.golden);
+    const goldenRel = path.relative(project.root, golden);
+    check(
+      "golden frame",
+      fs.existsSync(golden),
+      fs.existsSync(golden) ? goldenRel : `${goldenRel} (run explainer golden)`,
+    );
+    const timelineFile = path.join(project.build, "timeline.json");
+    let filmSeconds = null;
+    if (fs.existsSync(timelineFile)) {
+      try {
+        filmSeconds = Number(JSON.parse(fs.readFileSync(timelineFile, "utf8")).duration);
+      } catch {
+        filmSeconds = null;
+      }
+    }
+    const bed = inspectBed(config, project, { filmSeconds });
+    check("music bed", bed.ok, bed.reason);
   }
 
   for (const row of rows) {

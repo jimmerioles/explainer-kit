@@ -18,7 +18,7 @@ export function probe(file) {
       "-v",
       "error",
       "-show_entries",
-      "format=duration,size,bit_rate:stream=codec_name,codec_type,width,height,r_frame_rate,sample_rate,channels",
+      "format=format_name,duration,size,bit_rate:stream=codec_name,codec_type,width,height,r_frame_rate,avg_frame_rate,sample_rate,channels,channel_layout,pix_fmt,profile,level",
       "-of",
       "json",
       file,

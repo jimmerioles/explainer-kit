@@ -67,15 +67,24 @@ The rules that make two films feel like one series. They are not suggestions.
 
 ## Audio
 
-- One voice, `en-US-AvaNeural`, rate -3%, pitch -3Hz. Slower and lower than the
-  default, never theatrical.
+- One voice, Kokoro `af_heart`, speed 0.88. 24 kHz source, resampled to 48 kHz
+  by the kit. Calm, measured, never theatrical. Edge is a fallback, never a
+  second house voice.
 - Voice chain: highpass 75, lowpass 12000, de-esser, presence cuts at 3.2 and
   7.5 kHz, a 160 Hz lift, gentle compression, then -16 LUFS.
-- Music sits under the narration at roughly -24 LUFS before ducking, with a
-  sidechain at 0.06 threshold, 6:1, 20 ms attack, 300 ms release.
-- Fade the bed out over the last 2.5 seconds.
-- Master to -16.0 LUFS integrated, true peak at or below -1.5 dBFS, AAC 192k.
+- The house bed is the `tech` score: 100 BPM, A major, seed 1,
+  rendered locally and extended to the film. It is original, deterministic and
+  MIT licensed. The Wave fixture uses the same bed, trimmed to its length.
+- A bed sits at -24.5 LUFS within 3 LU, with a true peak at or below -2 dBFS,
+  48 kHz stereo, and lasts at least as long as the narration. `verify` checks all
+  four. A bed mastered at -14 LUFS is not a house bed.
+- Duck the bed under the voice at 0.06 threshold, 6:1, 20 ms attack, 300 ms
+  release. Fade it out over the last 2.5 seconds.
+- Master to -16.0 LUFS integrated. The limiter targets -2.5 dBFS true peak so
+  the AAC stays at or below the -1.5 dBFS gate. AAC 192k.
 - Silence is allowed. Do not fill every second with score.
+- The bed is an asset with provenance, not a prompt. Record the engine, style,
+  BPM, key, seed and license in `music.json`.
 
 ## Writing the script
 

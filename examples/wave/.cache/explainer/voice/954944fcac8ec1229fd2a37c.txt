@@ -1,2 +1,0 @@
-en-US-AvaNeural
-An envelope shapes the note. A fast attack, a decay to a sustain, and a long release when you let go.

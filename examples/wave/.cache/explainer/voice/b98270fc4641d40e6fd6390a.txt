@@ -1,2 +1,0 @@
-en-US-AvaNeural
-The arpeggiator doesn't trust the page clock.

@@ -1,2 +1,0 @@
-en-US-AvaNeural
-All of it is TypeScript, Canvas and the Web Audio API.

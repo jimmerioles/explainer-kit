@@ -1,2 +1,0 @@
-en-US-AvaNeural
-Hold a key, and the page answers.
