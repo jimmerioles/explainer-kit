@@ -8,7 +8,14 @@ import { execFileSync } from "node:child_process";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SKIP = new Set(["node_modules", "build", ".cache", ".git", "golden", "fonts"]);
 const CODE_DIRS = ["bin", "src", "render", "scripts", "templates", "docs/explainer", "examples"];
-const DOC_FILES = ["README.md", "PRODUCTION.md", "STYLE.md", "skill/SKILL.md", "CHANGELOG.md"];
+const DOC_FILES = [
+  "README.md",
+  "PRODUCTION.md",
+  "STYLE.md",
+  "skill/SKILL.md",
+  "CHANGELOG.md",
+  "THIRD_PARTY_NOTICES.md",
+];
 
 const RETIRED_BRAND = ["explain", "roo"].join("");
 const failures = [];

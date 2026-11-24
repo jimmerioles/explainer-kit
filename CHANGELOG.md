@@ -22,3 +22,7 @@
 - Project config now rejects unknown keys, invalid voice names, absolute bed
   paths and gate overrides. Gate thresholds are house-owned.
 - Removed the stale Edge golden files and the tracked Wave voice cache.
+- Added `THIRD_PARTY_NOTICES.md` and the SIL Open Font License text in
+  `fonts/OFL.txt`.
+- Documented how a new project copies the canonical house bed from the root
+  project, so no external music tool or research folder is needed.

@@ -92,6 +92,11 @@ installed as `docs/explainer/music.m4a`. It is original, deterministic, MIT
 licensed and safe for commercial video. The Wave fixture uses the same house bed,
 trimmed to its length.
 
+For a new project, copy `docs/explainer/music.m4a` and `music.json` from this
+kit's root project into the new project's `docs/explainer/`, then set `mix.bed`
+to `music.m4a`. That copy is the canonical house bed; no external music tool or
+research folder is needed.
+
 A bed must be:
 
 - 48 kHz stereo, at least as long as the narration.
@@ -191,6 +196,12 @@ ONNXRUNTIME_NODE_INSTALL_CUDA=skip npm install --include=optional
 
 The kit uses the CPU backend. Edge remains available by setting
 `voice.engine: "edge"` in a project.
+
+## Licenses
+
+The runtime packages, model, fonts and house music are listed in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). The local fonts carry the
+SIL Open Font License in [`fonts/OFL.txt`](fonts/OFL.txt).
 
 ## Versioning
 

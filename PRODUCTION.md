@@ -110,6 +110,11 @@ The house standard is the `tech` score: 100 BPM, A major, seed 1,
 rendered locally and extended to the film. It lives at `docs/explainer/music.m4a`
 in the root project. The Wave fixture uses the same bed, trimmed to its length.
 
+For a new project, copy the root project's `docs/explainer/music.m4a` and
+`music.json` into the new project's `docs/explainer/`, then set `mix.bed` to
+`music.m4a`. That copy is the canonical house bed; no external music tool or
+research folder is needed.
+
 A bed must be 48 kHz stereo, -24.5 LUFS within 3 LU, and at or below -2 dBFS
 true peak. `verify` checks all four. The kit applies the gain, the ducking
 sidechain, the 2.5 second fade and the master loudness. It does not write music.

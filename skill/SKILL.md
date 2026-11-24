@@ -86,7 +86,9 @@ If any check fails, fix the environment first.
 7. **Music.** Put the bed at `docs/explainer/music.m4a` and set `mix.bed`. The
    house bed is the `tech` score: 100 BPM, A major, seed 1, rendered
    locally and extended to the film. The Wave fixture uses the same bed, trimmed
-   to its length. A bed must be 48 kHz stereo, -24.5 LUFS within 3 LU, at or
+   to its length. For a new project, copy the root project's
+   `docs/explainer/music.m4a` and `music.json` into the new project and set
+   `mix.bed`. A bed must be 48 kHz stereo, -24.5 LUFS within 3 LU, at or
    below -2 dBFS true peak, and at least as long as the narration. Record the
    engine, style, BPM, key, seed and license in `music.json`. If the project has
    no music, set `"bed": null` and say so in the handoff. Do not invent a
